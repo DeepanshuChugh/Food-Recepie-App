@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style/navbar.css">
+    <style>
+        *{
+            box-sizing: border-box;
+            
+        }
+        body{
+            background-color: #f5f5f5;
+            color: #fff;
+            font-family: "Muli", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end ;
+            overflow: hidden;
+            background-image: url("https://images.unsplash.com/photo-1514995669114-6081e934b693?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGZvb2QlMjBpbmdyZWRpZW50c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60=");
+            background-repeat: no-repeat;
+            background-size: cover;
+           
+        }
+        .container{
+            margin-top: 25px;
+            margin-right: 50px;
+            background-color: rgba(0, 0, 0 ,0.4);
+            padding: 20px 40px;
+            border-radius: 5px;
+
+        }
+        .container h1{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container a{
+            text-decoration: none;
+            color: lightblue;
+        }
+        .btn{
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            background: lightblue;
+            padding: 15px;
+            /* font-family: inherit; */
+            font-size: 16px;
+            border: 0;
+            border-radius: 5PX;
+        }
+        .btn:focus{
+            outline: 0;
+        }
+        .btn:active{
+            transform: scale(.98);
+        }
+        .text{
+            margin-top:30px ;
+        }
+        .form-control{
+            position: relative;
+            margin: 20px 0 40px;
+            width: 300px;
+        }
+        .form-control input{
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px #fff solid;
+            display: block;
+            width: 100%;
+            padding: 18px 0;
+            font-size: 18px;
+            color: #fff;
+        }
+        .form-control input:focus ,.form-control input:valid{
+            outline: 0;
+            border-bottom-color: lightblue;
+        }
+        .form-control label{
+            position: absolute;
+            top: 10PX;
+            left: 0px;
+            font-size: 18px;
+            color: #fff;
+        }
+        .form-control label span{
+            display: inline-block;
+            font-size: 18px;
+            min-width: 5px;
+            transition: 0.3s cubic-bezier(0.68,-0.55,0.265,1.55);
+
+        }
+        .form-control input:focus + label span,.form-control input:valid + label span {  
+  color: lightblue;  
+  transform: translateY(-20px);
+ }
+ 
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a class="logo" href="/index.html"><img src="https://static.otta.com/uploads/images/company-logos/1791-chKstLMHpIGRPw_KTfO5UZSkDNTPAGzKQtw5mqlaU_E.png" alt=""></a>
+    <ul class="nav">
+<li><a href="./index.html">Home</a></li>
+<li><a href="#">Login</a></li>
+<li><a href="./signup.html">signup</a></li>
+<!-- <i class="fa fa-cart-shopping"></i> -->
+</ul>`
+    </div>
+    <div class="container">
+        <h1>Please Login</h1>
+        <form>
+            <div class="form-control">
+                <input type="text"  id="email" required> 
+                <label>Email</label>
+            </div>
+            <div class="form-control">
+                <input type="password"  id="password" required  >
+                <label>Password</label>
+            </div>
+            <button class="btn">Login</button>
+            <p class="text">Dont't have an account? <a href="./signup.html">Register</a></p>
+        </form>
+    </div>
+    
+</body>
+</html>
+<script>
+    const labels = document.querySelectorAll('.form-control label')  
+ labels.forEach(label => {  
+   label.innerHTML = label.innerText  
+     .split('')  
+     .map((letter, idx) => `<span style="transition-delay:${idx * 50}ms">${letter}</span>`)  
+     .join('')  
+ })
+
+ document.querySelector('.btn').addEventListener("click",getLoginData);
+ let data =JSON.parse(localStorage.getItem("plateway")) ||[];
+ console.log(data[0].name , data[0].password)
+ function getLoginData(){
+     event.preventDefault();
+     const email = document.getElementById("email").value;
+     const password  = document.getElementById("password").value;
+     
+     let flag = false;
+     for(let i=0;i<data.length;i++)
+     {
+        if( data[i].email==email && data[i].password==password)
+        {
+            flag =true;
+        }
+        else{
+            flag=false;
+        }
+     }
+     if(flag)
+     {
+         alert("Login Successful")
+         window.location.href="./index.html"
+     }
+    else{
+         alert("invalid Login Details")
+     }
+}
+</script>

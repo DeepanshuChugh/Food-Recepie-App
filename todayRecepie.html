@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style/navbar.css">
+    <style>
+        body{
+            box-sizing: border-box;
+            /*  */
+            overflow-x: hidden;
+        }
+   
+        .container{
+            /* border: 1px solid green; */
+            width: 100%;
+            /* background-color: #F5F5F5; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        }
+        .quote{
+            /* border: 1px solid red; */
+            width: 100%;
+            height: 45px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: rgb(13, 12, 12);
+            padding-left: 50px;
+            font-style: italic;
+            font-weight: 100;
+            font-size: 20px;
+            color:#4ec0be;
+        }
+        .mainBox
+        {
+            background-color: #F5F5F5;
+            width: 100%;
+            height: 290px;
+            display: flex;
+            box-shadow: rgba(52, 52, 55, 0.2) 0px 7px 29px 0px;
+        }
+        .main_left{
+            width: 30%;
+            /* border: 1px solid blue; */
+            display: flex;
+            justify-content: center;
+            margin-left: 40px;
+          
+        }
+      
+        .image{
+            width: 250px;
+            height: 250px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+        }
+        .instructionsDiv{
+            width: 80%;
+            height: 300px;
+            border: 1px solid purple;
+            text-overflow: clip;
+            margin: 50px;
+            padding: 50px;
+
+        }
+        .btnimg{
+            width: 300px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .instspara{
+            width: 90%;
+            /* border: 1px solid red; */
+            padding: 50px;
+            /* text-align: center; */
+            background-color: #F5F5F5;
+            
+        }
+        .footerimage{
+         width:100%;
+        height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        
+    </div>
+    <div class="searchRecepie">
+
+        <!-- Container -->
+    </div>
+    <div class="container">
+        <div class="quote">
+           <p>A recipe is a story that ends with a good meal.</p>
+        </div>
+
+        <div class="mainBox">
+            <div class="main_left"></div>
+            <div class="main_right"></div>
+          
+        </div>
+
+        <div class="videodiv">
+
+        </div>
+        
+        <div class="para">
+
+        </div>
+    </div>
+    <div class="footer">
+        <img src="https://i.ibb.co/PTgKRRF/Screenshot-2022-05-01-142815.png" class="footerimage" alt="">
+    </div>
+</body>
+</html>
+<script src="./script/nav.js" type="module"></script>
+<script src="./script/search.js"></script>
+
+<script>
+let recepieOfTheDay = searchRecepie();
+console.log(recepieOfTheDay);
+async function searchRecepie()
+{
+   try{
+    const url = `https://www.themealdb.com/api/json/v1/1/random.php`;
+     let res = await fetch(url);
+       let data = await res.json();
+       console.log(data.meals);
+       append(data.meals);
+
+   }catch(err)
+   {
+       console.log(err);
+   }
+}
+const mainBox = document.querySelector(".mainBox")
+const main_left = document.querySelector(".main_left")
+const main_right = document.querySelector(".main_right")
+
+const para = document.querySelector(".para");
+function append(data) {
+   
+    data.forEach(
+        ({ strInstructions,strMeal, strMealThumb, strYoutube, strArea, strCategory }) => {
+
+      
+        // let imgDiv = document.createElement()
+        let img = document.createElement("img");
+        img.src = strMealThumb;
+        img.setAttribute("class","image")
+        main_left.append(img);
+       
+        let name = document.createElement("h2");
+        name.innerText=`DishName : ${strMeal}`;
+
+        let origin  = document.createElement("p");
+        origin.innerText=`Origin : ${strArea}`;
+        origin.style.color="gray"
+        origin.style.fontWeight="200"
+
+
+        let category = document.createElement("h3");
+        category.innerText=`Category : ${strCategory}`;
+        category.style.color="gray"
+        category.style.fontWeight="200"
+
+
+        let btnimg = document.createElement("img")
+        btnimg.src="https://www.nicepng.com/png/detail/22-225492_watch-video-button-animated.png"
+        btnimg.addEventListener("click",youTube)
+        btnimg.setAttribute("class","btnimg")
+        function youTube(){
+            window.location.href=strYoutube;
+            console.log("fdpkf");
+        }
+
+       
+
+        let instructions = document.createElement("p");
+        instructions.setAttribute("class","instspara")
+        instructions.innerText=strInstructions;
+
+        para.append(instructions);
+        
+        main_right.append(name,origin,category, btnimg);
+      
+
+
+
+
+
+
+
+
+
+    // //         let img = document.createElement("img");
+    // //         img.src = strMealThumb;
+    // //         // img.setAttribute("class", "images");
+    // //         poster.append(img);
+
+    // //         let title = document.createElement("h2");
+    // //         title.innerText = strMeal;
+    // //         //   name.style.color = "yellow";
+    // //         name.append(title);
+
+    // //   let origin1 = document.createElement("p");
+    // //   origin1.innerText = `Origin : ${strArea}`;
+    // //   origin.append(origin1);
+
+      
+    // //   let category1 = document.createElement("p");
+    // //   category1.innerText = `Category : ${strCategory}`;
+    // //   category.append(category1);
+      
+    // //   let video = document.createElement("a");
+    // //   video.innerText = "Watch on Youtube";
+    // //   video.setAttribute("href", strYoutube);
+    // //   video.setAttribute("class", "video");
+    // //   youtube.append(video);
+
+
+    // // main_right.append(name,origin,category,)
+
+
+
+
+
+    }
+  );
+};
+</script>
